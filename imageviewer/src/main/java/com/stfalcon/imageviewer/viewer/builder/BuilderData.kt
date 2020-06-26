@@ -32,6 +32,7 @@ internal class BuilderData<T>(
     var imageChangeListener: OnImageChangeListener? = null
     var onDismissListener: OnDismissListener? = null
     var overlayView: View? = null
+    var backgroundView: View? = null
     var imageMarginPixels: Int = 0
     var containerPaddingPixels = IntArray(4)
     var shouldStatusBarHide = true

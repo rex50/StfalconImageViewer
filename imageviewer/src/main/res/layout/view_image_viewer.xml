@@ -29,6 +29,12 @@
         android:alpha="0"/>
 
     <FrameLayout
+        android:id="@+id/userBgView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
+
+    <FrameLayout
         android:id="@+id/dismissContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

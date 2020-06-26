@@ -18,10 +18,7 @@ package com.stfalcon.imageviewer.viewer.view
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.MotionEvent
-import android.view.ScaleGestureDetector
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -84,8 +81,15 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
             value?.let { rootContainer.addView(it) }
         }
 
+    internal var userBackgroundView: View? = null
+        set(value) {
+            field = value
+            value?.let { userBgView.addView(it, 0) }
+        }
+
     private var rootContainer: ViewGroup
     private var backgroundView: View
+    private var userBgView: FrameLayout
     private var dismissContainer: ViewGroup
 
     private val transitionImageContainer: FrameLayout
@@ -128,6 +132,7 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
 
         rootContainer = findViewById(R.id.rootContainer)
         backgroundView = findViewById(R.id.backgroundView)
+        userBgView = findViewById(R.id.userBgView)
         dismissContainer = findViewById(R.id.dismissContainer)
 
         transitionImageContainer = findViewById(R.id.transitionImageContainer)

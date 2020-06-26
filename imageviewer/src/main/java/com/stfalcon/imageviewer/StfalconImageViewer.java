@@ -173,6 +173,17 @@ public class StfalconImageViewer<T> {
         }
 
         /**
+         * Sets custom background view to be shown below the viewer.
+         * Commonly used for showing pre-loaders.
+         *
+         * @return This Builder object to allow calls chaining
+         */
+        public Builder<T> withBackgroundView(View view) {
+            this.data.setBackgroundView(view);
+            return this;
+        }
+
+        /**
          * Sets space between the images using dimension.
          *
          * @return This Builder object to allow calls chaining

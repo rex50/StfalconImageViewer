@@ -98,6 +98,10 @@ internal class ImageViewerDialog<T>(
 
     private fun setupViewerView() {
         viewerView.apply {
+            builderData.backgroundView?.apply {
+                userBackgroundView = builderData.backgroundView
+            }
+
             isZoomingAllowed = builderData.isZoomingAllowed
             isSwipeToDismissAllowed = builderData.isSwipeToDismissAllowed
 
