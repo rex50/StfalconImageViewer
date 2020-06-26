@@ -21,15 +21,13 @@ import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.transition.AutoTransition
-import androidx.transition.Transition
-import androidx.transition.TransitionManager
+import androidx.transition.*
 import com.stfalcon.imageviewer.common.extensions.*
 
 internal class TransitionImageAnimator(
-    private val externalImage: ImageView?,
-    private val internalImage: ImageView,
-    private val internalImageContainer: FrameLayout
+        private val externalImage: ImageView?,
+        private val internalImage: ImageView,
+        private val internalImageContainer: FrameLayout
 ) {
 
     companion object {
@@ -48,9 +46,9 @@ internal class TransitionImageAnimator(
         get() = internalImageContainer.parent as ViewGroup
 
     internal fun animateOpen(
-        containerPadding: IntArray,
-        onTransitionStart: (Long) -> Unit,
-        onTransitionEnd: () -> Unit
+            containerPadding: IntArray,
+            onTransitionStart: (Long) -> Unit,
+            onTransitionEnd: () -> Unit
     ) {
         if (externalImage.isRectVisible) {
             onTransitionStart(TRANSITION_DURATION_OPEN)
@@ -61,9 +59,9 @@ internal class TransitionImageAnimator(
     }
 
     internal fun animateClose(
-        shouldDismissToBottom: Boolean,
-        onTransitionStart: (Long) -> Unit,
-        onTransitionEnd: () -> Unit
+            shouldDismissToBottom: Boolean,
+            onTransitionStart: (Long) -> Unit,
+            onTransitionEnd: () -> Unit
     ) {
         if (externalImage.isRectVisible && !shouldDismissToBottom) {
             onTransitionStart(TRANSITION_DURATION_CLOSE)
@@ -91,12 +89,13 @@ internal class TransitionImageAnimator(
 
             internalImageContainer.makeViewMatchParent()
             internalImage.makeViewMatchParent()
+            internalImage.scaleType = ImageView.ScaleType.FIT_CENTER
 
             internalRoot.applyMargin(
-                containerPadding[0],
-                containerPadding[1],
-                containerPadding[2],
-                containerPadding[3])
+                    containerPadding[0],
+                    containerPadding[1],
+                    containerPadding[2],
+                    containerPadding[3])
 
             internalImageContainer.requestLayout()
         }
@@ -107,7 +106,7 @@ internal class TransitionImageAnimator(
         isClosing = true
 
         TransitionManager.beginDelayedTransition(
-            internalRoot, createTransition { handleCloseTransitionEnd(onTransitionEnd) })
+                internalRoot, createTransition { handleCloseTransitionEnd(onTransitionEnd) })
 
         prepareTransitionLayout()
         internalImageContainer.requestLayout()
@@ -126,6 +125,8 @@ internal class TransitionImageAnimator(
                 }
             }
 
+            internalImage.scaleType = it.scaleType
+
             resetRootTranslation()
         }
     }
@@ -138,15 +139,24 @@ internal class TransitionImageAnimator(
 
     private fun resetRootTranslation() {
         internalRoot
-            .animate()
-            .translationY(0f)
-            .setDuration(transitionDuration)
-            .start()
+                .animate()
+                .translationY(0f)
+                .setDuration(transitionDuration)
+                .start()
     }
 
-    private fun createTransition(onTransitionEnd: (() -> Unit)? = null): Transition =
-        AutoTransition()
-            .setDuration(transitionDuration)
-            .setInterpolator(DecelerateInterpolator())
-            .addListener(onTransitionEnd = { onTransitionEnd?.invoke() })
+    private fun createTransition(onTransitionEnd: (() -> Unit)? = null): Transition  {
+        val transition =
+                TransitionSet ()
+                        .setOrdering(TransitionSet.ORDERING_TOGETHER)
+                        .addTransition(ChangeBounds())
+                        .addTransition(ChangeTransform())
+                        .addTransition(ChangeClipBounds())
+                        .addTransition(ChangeImageTransform())
+
+        return transition
+                .setDuration(transitionDuration)
+                .setInterpolator(DecelerateInterpolator())
+                .addListener(onTransitionEnd = { onTransitionEnd?.invoke() })
+    }
 }
