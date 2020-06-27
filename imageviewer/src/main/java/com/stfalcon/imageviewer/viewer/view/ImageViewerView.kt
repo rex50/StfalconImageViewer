@@ -322,6 +322,7 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
         val alpha = calculateTranslationAlpha(translationY, translationLimit)
         backgroundView.alpha = alpha
         overlayView?.alpha = alpha
+        userBackgroundView?.alpha = alpha
     }
 
     private fun dispatchOverlayTouch(event: MotionEvent): Boolean =
