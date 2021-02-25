@@ -1,23 +1,17 @@
-[![codebeat badge](https://codebeat.co/badges/91ce76f4-cba6-4971-aad7-070e635d11be)](https://codebeat.co/projects/github-com-stfalcon-studio-stfalconimageviewer-master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/23c4c8c6f44541a8bfdb0e385da2436a)](https://www.codacy.com/app/troy.carvill/StfalconImageViewer?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=stfalcon-studio/StfalconImageViewer&amp;utm_campaign=Badge_Grade)
-[![Download](https://api.bintray.com/packages/troy379/maven/StfalconImageViewer/images/download.svg) ](https://bintray.com/troy379/maven/StfalconImageViewer/_latestVersion)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-# Stfalcon ImageViewer
-A simple and customizable full-screen image viewer with shared image transition support, "pinch to zoom" and "swipe to dismiss" gestures. Compatible with all of the most popular image processing libraries such as `Picasso`, `Glide` etc.
+# ImageViewer
+This repo is forked from [Stfalcon ImageViewer](https://github.com/stfalcon-studio/StfalconImageViewer) which is a simple and customizable full-screen image viewer with shared image transition support, "pinch to zoom" and "swipe to dismiss" gestures. Compatible with all of the most popular image processing libraries such as `Picasso`, `Glide` etc.
 Based on [PhotoView](https://github.com/chrisbanes/PhotoView) by [chrisbanes](https://github.com/chrisbanes).
 
 ![alt tag](images/image_viewer_main_demo.gif) ![alt tag](images/image_viewer_transition_demo.gif)
 
-### Who we are
-Need iOS and Android apps, MVP development or prototyping? Contact us via info@stfalcon.com. We develop software since 2009, and we're known experts in this field. Check out our [portfolio](https://stfalcon.com/en/portfolio) and see more libraries from [stfalcon-studio](https://stfalcon-studio.github.io/).
+### What's new then?
+Other than original library
+* Have fixed an animation issue.
+* Have added an api where user can also set background view(which can be used to show loaders and other stuff).
 
 ### Requirements
 * A project configured with the AndroidX
 * SDK 19 and and higher
-
-### Demo Application
-[![Get it on Google Play](https://play.google.com/intl/en_us/badges/images/badge_new.png)](https://play.google.com/store/apps/details?id=com.stfalcon.stfalconimageviewersample)
 
 ### Install
 Download via **Gradle**:
@@ -34,20 +28,8 @@ allprojects {
 
 And then add the dependency to the **module `build.gradle`** file:
 ```gradle
-implementation 'com.github.stfalcon:stfalcon-imageviewer:latest_version'
+implementation 'com.github.rex50:StfalconImageViewer:$latest_version'
 ```
-
-Download via **Maven**:
-```
-<dependency>
-  <groupId>com.github.stfalcon</groupId>
-  <artifactId>stfalcon-imageviewer</artifactId>
-  <version>latest_version</version>
-  <type>pom</type>
-</dependency>
-```
-
-Where the `latest_version` is the value from `Download` badge.
 
 ### Usage
 #### Simple usage
@@ -97,6 +79,7 @@ StfalconImageViewer.Builder<String>(this, images, ::loadImage)
             .withBackgroundColor(color)
             //.withBackgroundColorResource(R.color.color)
             .withOverlayView(view)
+            .withBackgroundView(customAnimationPreloader)
             .withImagesMargin(R.dimen.margin)
             //.withImageMarginPixels(margin)
             .withContainerPadding(R.dimen.padding)
@@ -110,27 +93,4 @@ StfalconImageViewer.Builder<String>(this, images, ::loadImage)
             .withImageChangeListener(::onImageChanged)
             .withDismissListener(::onViewerDismissed)
             .withDismissListener(::onViewerDismissed)
-```
-
-Also, you can take a look at the [sample project](https://github.com/stfalcon-studio/StfalconImageViewer/tree/master/sample) for more information.
-
-### Usage with Fresco
-If you use the Fresco library - check out the [FrescoImageViewer](https://github.com/stfalcon-studio/FrescoImageViewer) which was also developed by our team.
-
-### License
-```
-Copyright (C) 2018 stfalcon.com
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
 ```
